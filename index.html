@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pusaka Terawangan Pro - Kitab Primbon Sempurna</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap');
+        
+        :root { 
+            --bg-deep: #080404; 
+            --gold-royal: #FFD700; 
+            --gold-dim: #cca876;
+            --red-mystic: #b30000; 
+            --red-blood: #660000;
+            --green-jade: #00ff88; 
+            --text-dim: #a0aec0; 
+            --card-bg: #0f0707; 
+        }
+        
+        body { font-family: 'Noto Serif', serif; background-color: var(--bg-deep); color: #f4e8c1; display: flex; flex-direction: column; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; background-image: radial-gradient(circle at top, #1a0505 0%, transparent 50%), linear-gradient(0deg, rgba(255, 215, 0, 0.02) 1px, transparent 1px); }
+        .container { background: var(--card-bg); padding: 30px 25px; border-radius: 12px; border: 2px solid var(--red-mystic); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9), inset 0 0 30px rgba(179, 0, 0, 0.2); width: 100%; max-width: 520px; position: relative; }
+        .container::before { content: '📜 KITAB PRIMBON SEMPURNA 📜'; position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--bg-deep); padding: 0 15px; color: var(--gold-royal); font-size: 0.9rem; font-weight: bold; letter-spacing: 3px; border: 1px solid var(--gold-royal); border-radius: 20px; white-space: nowrap; text-shadow: 0 0 10px rgba(255,215,0,0.4);}
+        .header-title { color: var(--gold-royal); font-size: 1.6rem; font-weight: 700; margin-top: 15px; margin-bottom: 5px; text-align: center; letter-spacing: 3px; text-transform: uppercase; text-shadow: 0 0 15px rgba(255, 215, 0, 0.3); }
+        .version { color: var(--gold-dim); font-size: 0.75rem; text-align: center; margin-bottom: 25px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; border-bottom: 1px dashed var(--red-mystic); padding-bottom: 10px; }
+        
+        .input-group { margin-bottom: 20px; text-align: center; }
+        .input-group label { display: block; color: var(--gold-dim); font-size: 0.85rem; margin-bottom: 8px; font-weight: 700; letter-spacing: 1.5px;}
+        
+        input[type="date"] { width: 100%; padding: 15px; font-size: 1.2rem; font-weight: 700; text-align: center; background: #000; color: var(--gold-royal); border: 1px solid var(--red-mystic); border-radius: 8px; box-sizing: border-box; font-family: 'Noto Serif', serif; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; box-shadow: inset 0 0 10px rgba(0,0,0,0.5);}
+        input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1) sepia(1) saturate(5) hue-rotate(90deg); cursor: pointer; }
+        input[type="date"]:focus { outline: none; border-color: var(--gold-royal); box-shadow: 0 0 15px rgba(255, 215, 0, 0.3); }
+        
+        .btn-primary { width: 100%; padding: 16px; font-size: 1rem; font-weight: 700; font-family: 'Noto Serif', serif; border-radius: 8px; cursor: pointer; transition: all 0.2s; letter-spacing: 3px; margin-bottom: 10px; background: linear-gradient(135deg, var(--red-blood), var(--red-mystic)); color: #fff; border: 1px solid var(--gold-royal); text-transform: uppercase; box-shadow: 0 4px 15px rgba(179, 0, 0, 0.6); text-shadow: 1px 1px 2px #000; }
+        .btn-primary:active { transform: scale(0.98); }
+        
+        #loader { display: none; color: var(--gold-royal); font-size: 0.9rem; text-align: center; margin: 20px 0; font-weight: 700; font-style: italic; letter-spacing: 1px; animation: blink 1s infinite;}
+        @keyframes blink { 50% { opacity: 0.5; } }
+        #resultContainer { display: none; flex-direction: column; gap: 16px; animation: slideUp 0.8s ease-out; margin-top: 15px;}
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .box { background: rgba(0, 0, 0, 0.6); border: 1px solid #331111; border-radius: 8px; padding: 20px; position: relative; box-shadow: inset 0 0 15px rgba(0,0,0,1);}
+        .box-title { color: var(--gold-royal); font-size: 0.95rem; font-weight: bold; letter-spacing: 2px; margin-bottom: 15px; border-bottom: 1px solid #4a0000; padding-bottom: 10px; text-align: center; text-transform: uppercase;}
+        
+        .weton-card { background: radial-gradient(circle at top, #220505, #000); border: 1px dashed var(--gold-royal); padding: 20px; text-align: center; border-radius: 8px; box-shadow: 0 0 20px rgba(179,0,0,0.15);}
+        .weton-card span { font-size: 0.8rem; color: var(--gold-dim); display: block; margin-bottom: 5px; font-weight: bold; letter-spacing: 2px;}
+        .weton-card .weton-name { font-size: 2rem; color: var(--gold-royal); font-weight: 900; letter-spacing: 3px; text-shadow: 0 0 15px rgba(255, 215, 0, 0.3);}
+        .weton-card .weton-neptu { font-size: 1.1rem; color: #fff; margin-top: 10px; font-weight: bold; letter-spacing: 2px;}
+
+        .reading-text { font-size: 0.9rem; line-height: 1.6; color: #e2e8f0; text-align: justify; margin-bottom: 10px;}
+        .reading-text strong { color: var(--gold-dim); }
+        .highlight-text { font-size: 1.1rem; color: var(--gold-royal); font-weight: bold; text-align: center; display: block; margin-bottom: 10px; letter-spacing: 1px; border-bottom: 1px dotted #4a0000; padding-bottom: 8px;}
+        
+        .status-badge { display: inline-block; padding: 5px 12px; border-radius: 4px; font-size: 0.85rem; font-weight: bold; letter-spacing: 1px; color: #000; margin-bottom: 10px; box-shadow: 0 0 10px rgba(255,255,255,0.2);}
+        
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .item-card { background: #000; border: 1px solid #220505; border-radius: 6px; padding: 15px; text-align: center;}
+        .item-card span { display: block; color: var(--text-dim); font-size: 0.75rem; font-weight: bold; letter-spacing: 1px; margin-bottom: 8px;}
+        .item-card strong { color: #fff; font-size: 1.1rem; font-weight: bold; letter-spacing: 1px;}
+
+        .copyright { margin-top: 30px; text-align: center; font-size: 0.75rem; color: var(--text-dim); letter-spacing: 1.5px; border-top: 1px dashed #331111; padding-top: 15px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-title">PUSAKA TERAWANGAN</div>
+        <div class="version">KITAB METAFISIKA & NASIB UTUH</div>
+        
+        <div class="input-group">
+            <label>TENTUKAN TANGGAL KELAHIRAN / PERISTIWA</label>
+            <input type="date" id="tglInput">
+        </div>
+
+        <button class="btn-primary" onclick="eksekusiTerawangan()">BACA KITAB PRIMBON 👁️</button>
+        <div id="loader">Membuka Tabir Alam Semesta...</div>
+        <div id="resultContainer"></div>
+        
+        <div class="copyright">
+            &copy; <span id="currentYear"></span> PUSAKA TERAWANGAN JAWA.
+        </div>
+    </div>
+
+    <script>
+        function setTanggalHariIni() {
+            const today = new Date();
+            const formattedDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+            const inputTgl = document.getElementById('tglInput');
+            if (inputTgl && inputTgl.value !== formattedDate) { inputTgl.value = formattedDate; }
+            document.getElementById('currentYear').textContent = today.getFullYear();
+        }
+
+        document.addEventListener('DOMContentLoaded', setTanggalHariIni);
+        const mod = (n, m) => ((n % m) + m) % m;
+
+        // Data Primbon Jawa
+        const hariVal = { 0: 5, 1: 4, 2: 3, 3: 7, 4: 8, 5: 6, 6: 9 };
+        const hariName = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+        const pasaranName = ['Wage', 'Kliwon', 'Legi', 'Pahing', 'Pon'];
+        const pasaranVal = { 'Wage': 4, 'Kliwon': 8, 'Legi': 5, 'Pahing': 9, 'Pon': 7 };
+        
+        // Karakter Pasaran
+        const sifatPasaran = {
+            'Legi': 'Berjiwa pemimpin, ikhlas, dan pandai merangkul orang lain. Terkadang suka mencampuri urusan orang, namun niatnya baik.',
+            'Pahing': 'Ambisius, cerdik, dan pekerja keras. Sifatnya sedikit keras kepala dan mudah tersinggung, namun sangat totalitas.',
+            'Pon': 'Pemikir strategis, penyabar, dan pandai menyimpan rahasia. Bicaranya berwibawa dan penuh makna.',
+            'Wage': 'Berpendirian teguh, tangguh, dan berani menderita. Kaku dan sulit menerima masukan, tetapi sangat setia pada janji.',
+            'Kliwon': 'Spiritualis, pandai berucap, dan karismatik. Kadang sulit ditebak dan memiliki aura misterius yang disegani.'
+        };
+
+        // Watek Neptu (Lakuning Alam)
+        const watekNeptu = {
+            7: { nama: 'LAKUNING BUMI', desc: 'Sabar, penyendiri, dan suka mengalah. Hatinya luas, mampu menampung keluh kesah tanpa banyak menuntut.' },
+            8: { nama: 'LAKUNING GENI', desc: 'Sifat dasar seperti api. Emosional, tegas, pemberani. Jika terkendali, akan menjadi penerang dan pendorong perubahan.' },
+            9: { nama: 'LAKUNING ANGIN', desc: 'Dinamis, lincah, tak suka diam. Gesit menyelesaikan masalah meski terkadang mudah bimbang oleh keadaan.' },
+            10: { nama: 'LAKUNING PANDITA', desc: 'Cerdas, pendiam, berinsting tajam. Suka memberi nasihat namun tak suka mencampuri urusan yang bukan haknya.' },
+            11: { nama: 'LAKUNING SETAN', desc: 'Pemberani, berjiwa bebas, sulit diatur. Jika diarahkan dengan baik, jiwa pemberontaknya menjadi kepemimpinan tangguh.' },
+            12: { nama: 'LAKUNING KEMBANG', desc: 'Menebarkan pesona, cinta damai. Sering menjadi penengah konflik karena auranya yang menyejukkan dan memikat.' },
+            13: { nama: 'LAKUNING LINTANG', desc: 'Memiliki pesona misterius. Suka menyendiri, namun selalu bersinar dan menjadi pusat perhatian di saat yang tepat.' },
+            14: { nama: 'LAKUNING REMBULAN', desc: 'Penenang hati, pendengar yang baik. Menjadi pencerah di kala gelap, membuat orang merasa nyaman di dekatnya.' },
+            15: { nama: 'LAKUNING SRENGENGE', desc: 'Tegas, berwibawa, menerangi sekitar. Memiliki bakat kepemimpinan alami yang sangat kuat dan sangat disegani.' },
+            16: { nama: 'LAKUNING BANYU', desc: 'Tenang namun menghanyutkan. Pandai beradaptasi, berempati tinggi, dan selalu menyejukkan hati siapa saja.' },
+            17: { nama: 'LAKUNING BUMI', desc: 'Penyabar, pengayom, dan ulet. Cenderung diam namun pergerakannya menghanyutkan dan teguh pada pendirian.' },
+            18: { nama: 'LAKUNING PARIPURNA', desc: 'Sempurna. Menggabungkan ketegasan dan kebijaksanaan. Sosok berkuasa yang dihormati, meski tuntutan hidupnya berat.' }
+        };
+
+        // Profesi berdasarkan Neptu
+        const profesiNeptu = {
+            7: 'Pertanian, peternakan, pekerja lepas, atau wirausaha mandiri yang tidak terikat waktu.',
+            8: 'TNI, Polri, satpam, teknisi, atau bidang yang menuntut keberanian dan kekuatan fisik.',
+            9: 'Bidang jasa, penulis, pendidik, seniman, atau pekerjaan dengan mobilitas tinggi.',
+            10: 'Guru, dosen, konselor, penasihat spiritual, atau tokoh masyarakat.',
+            11: 'Wirausaha, seniman bebas, konten kreator, atau pekerjaan tanpa rutinitas kaku.',
+            12: 'Bidang kesehatan (dokter/perawat), pelayanan masyarakat, psikolog, atau negosiator.',
+            13: 'Desainer, ahli IT, arsitek, atau pekerjaan yang butuh imajinasi dan fokus di belakang layar.',
+            14: 'Pendidikan, pelatih (coach), penulis, manajer SDM, atau ahli komunikasi.',
+            15: 'Pemimpin perusahaan, birokrat, politisi, atau pengusaha skala besar.',
+            16: 'Humas (PR), marketing, diplomat, atau pekerjaan yang menuntut kelihaian bergaul.',
+            17: 'Pengusaha, manajer, petani sukses, atau pekerjaan yang butuh ketekunan tingkat tinggi.',
+            18: 'Pemimpin tertinggi, direktur, pejabat negara, atau tokoh sentral masyarakat.'
+        };
+
+        // Arah Nogo Dino
+        const arahKejayaan = { 'Legi': 'Timur', 'Pahing': 'Selatan', 'Pon': 'Barat', 'Wage': 'Utara', 'Kliwon': 'Tengah (Pusat)' };
+        const arahPantangan = { 'Legi': 'Barat', 'Pahing': 'Utara', 'Pon': 'Timur', 'Wage': 'Selatan', 'Kliwon': 'Situasional' };
+
+        // Pancasuda
+        const hitunganPancasuda = {
+            1: { nama: 'SANDANG (Pakaian)', desc: 'Energi rezeki mengalir lancar. Sangat baik untuk memulai negosiasi, berdagang, atau mencari pekerjaan.', color: '#00ff88' },
+            2: { nama: 'PANGAN (Makanan)', desc: 'Kondisi stabil. Rezeki cukup. Hari yang baik untuk bersilaturahmi dan mempererat relasi bisnis atau keluarga.', color: '#00ccff' },
+            3: { nama: 'GEDHONG (Kekayaan)', desc: 'Puncak keberuntungan! Energi semesta mendukung penuh. Sangat disarankan memulai usaha baru atau berinvestasi.', color: '#FFD700' },
+            4: { nama: 'LORO (Sakit/Rugi)', desc: 'Terdapat potensi halangan/kerugian. Disarankan menunda pengeluaran besar, lebih banyak introspeksi atau berdoa.', color: '#ff9900' },
+            0: { nama: 'PATI (Mati/Sial)', desc: 'Energi alam melemah. Sangat dilarang keras memulai hajat besar, bepergian jauh, atau membuka usaha hari ini.', color: '#ff3333' }
+        };
+
+        function eksekusiTerawangan() {
+            const dateVal = document.getElementById('tglInput').value;
+            if(!dateVal) { alert('Pilih tanggal terlebih dahulu!'); return; }
+            
+            const loader = document.getElementById("loader");
+            const result = document.getElementById("resultContainer");
+            
+            result.style.display = "none";
+            loader.style.display = "block";
+            
+            setTimeout(() => { 
+                loader.style.display = "none"; 
+                prosesBacaPrimbon(dateVal); 
+            }, 600);
+        }
+
+        function prosesBacaPrimbon(dateStr) {
+            const parts = dateStr.split('-');
+            const year = parseInt(parts[0], 10);
+            const month = parseInt(parts[1], 10) - 1;
+            const day = parseInt(parts[2], 10);
+
+            const targetDate = new Date(Date.UTC(year, month, day));
+            const epochDate = new Date(Date.UTC(1970, 0, 1));
+            const diffDays = Math.floor((targetDate - epochDate) / 86400000);
+
+            const dayIndex = targetDate.getUTCDay();
+            const pasaranIndex = mod(diffDays, 5);
+
+            const hName = hariName[dayIndex];
+            const pName = pasaranName[pasaranIndex];
+            const hVal = hariVal[dayIndex];
+            const pVal = pasaranVal[pName];
+            const neptu = hVal + pVal;
+
+            const watek = watekNeptu[neptu];
+            const karir = profesiNeptu[neptu];
+            const sisaPancasuda = neptu % 5;
+            const pancasudaInfo = hitunganPancasuda[sisaPancasuda];
+
+            document.getElementById("resultContainer").innerHTML = `
+                <div class="weton-card">
+                    <span>HARI & PASARAN (WETON)</span>
+                    <div class="weton-name">${hName.toUpperCase()} ${pName.toUpperCase()}</div>
+                    <div class="weton-neptu">NILAI NEPTU: ${hVal} + ${pVal} = <span style="color:var(--gold-royal);">${neptu}</span></div>
+                </div>
+                
+                <div class="box">
+                    <div class="box-title">👁️ ELEMEN JIWA & KARAKTER</div>
+                    <span class="highlight-text">${watek.nama}</span>
+                    <div class="reading-text">
+                        <strong>Karakter Bawaan Pasaran ${pName}:</strong><br>
+                        ${sifatPasaran[pName]}<br><br>
+                        <strong>Watek Alam (Neptu ${neptu}):</strong><br>
+                        ${watek.desc}
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="box-title">💼 POTENSI PROFESI & KARIR</div>
+                    <div class="reading-text" style="text-align:center;">
+                        Berdasarkan rotasi energi Neptu <strong>${neptu}</strong>, jalan rezeki dan profesi yang paling resonan adalah: <br><br>
+                        <span style="color:var(--gold-royal); font-weight:bold; font-size:1.05rem;">"${karir}"</span>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="box-title">⚖️ HITUNGAN PANCASUDA HARI INI</div>
+                    <div style="text-align:center;">
+                        <div class="status-badge" style="background-color:${pancasudaInfo.color};">${pancasudaInfo.nama}</div>
+                    </div>
+                    <div class="reading-text" style="text-align:center;">
+                        ${pancasudaInfo.desc}
+                    </div>
+                </div>
+
+                <div class="box" style="border-color:var(--red-mystic); background:radial-gradient(circle at top right, #2a0505, #000);">
+                    <div class="box-title" style="color:var(--gold-dim); border-bottom-color:var(--red-mystic);">🧭 ARAH NOGO DINO</div>
+                    <div class="reading-text" style="font-size:0.85rem; text-align:center; margin-bottom:15px;">
+                        Posisi naga hari ini menghadap ke arah tertentu. Gunakan arah kejayaan untuk menjemput rezeki, dan hindari arah pantangan.
+                    </div>
+                    <div class="grid-2">
+                        <div class="item-card" style="border-left: 4px solid var(--green-jade);">
+                            <span>ARAH KEJAYAAN</span>
+                            <strong style="color:var(--green-jade);">${arahKejayaan[pName].toUpperCase()}</strong>
+                        </div>
+                        <div class="item-card" style="border-left: 4px solid var(--red-blood);">
+                            <span>ARAH PANTANGAN</span>
+                            <strong style="color:#ff3333;">${arahPantangan[pName].toUpperCase()}</strong>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById("resultContainer").style.display = "flex";
+            setTimeout(() => { window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" }); }, 100);
+        }
+    </script>
+</body>
+</html>
